@@ -330,7 +330,7 @@ El script pide que escribas `SI` antes de tocar producción.
 - [ ] La consola del navegador no muestra violaciones de CSP.
 - [ ] **Always Use HTTPS** está activo.
 - [ ] La renovación automática del dominio está activa.
-- [ ] Reemplazaste los placeholders: número de WhatsApp (`5490000000000`), precios y `TU-DOMINIO`.
+- [ ] El número de WhatsApp está en formato internacional (`549` + área sin 0 + número sin 15, ej. `5492664682314`) y los precios son los reales.
 
 **Proceso**
 - [ ] `npm test` en verde.
@@ -345,7 +345,7 @@ El script pide que escribas `SI` antes de tocar producción.
 | Ver errores en vivo | `npm run logs` (`wrangler tail`) |
 | Permitir otro dominio de destino | Agregalo a `DOMINIOS_PERMITIDOS` en `wrangler.toml` y `npm run deploy` |
 | Cambiar el token del admin | `npx wrangler secret put ADMIN_TOKEN` (el viejo deja de servir al instante) |
-| Cambiar el número de WhatsApp | Buscá y reemplazá `5490000000000` en `public/` |
+| Cambiar el número de WhatsApp | Buscá y reemplazá `5492664682314` en `public/` (formato internacional: `549` + área sin 0 + número sin 15) |
 
 ## 12. Decisiones técnicas y límites conocidos
 
