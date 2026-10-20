@@ -1,0 +1,70 @@
+#:schema node_modules/wrangler/config-schema.json
+# ─────────────────────────────────────────────────────────────────
+# Configuración del Worker de Nodos Studio.
+#
+# Un solo Worker hace dos cosas:
+#   1. Sirve la carpeta public/ como sitio estático (landing, admin, páginas
+#      de placa). Cloudflare la entrega directo, sin ejecutar nuestro código.
+#   2. Para las rutas que NO son un archivo (/r/*, /e/*, /api/*) ejecuta
+#      src/index.js.
+# ─────────────────────────────────────────────────────────────────
+
+name = "nodos-studio"
+main = "src/index.js"
+
+# Fija el "comportamiento" del runtime a una fecha: si Cloudflare cambia algo
+# más adelante, este Worker sigue funcionando igual hasta que la actualicemos.
+compatibility_date = "2026-10-01"
+
+# SEGURIDAD: desactiva las URLs *.workers.dev y las URLs de preview.
+# Si quedaran activas, alguien podría llegar al Worker SIN pasar por
+# Cloudflare Access (que solo protege tu dominio propio).
+workers_dev = false
+preview_urls = false
+
+# ─── Sitio estático ──────────────────────────────────────────────
+[assets]
+directory = "./public"
+# Con este binding el Worker puede pedir un archivo estático (ej. la página
+# de activación) y devolverlo con el status y los headers que quiera.
+binding = "ASSETS"
+
+# ─── Base de datos clave-valor ───────────────────────────────────
+# Guarda "enlace:<slug>" → { estado, destino, cliente, codigo_hash, sal, ... }
+# El id lo obtenés con:  npx wrangler kv namespace create ENLACES
+# En local (wrangler dev) este valor puede quedar así: se simula en .wrangler/
+[[kv_namespaces]]
+binding = "ENLACES"
+id = "REEMPLAZAR_CON_EL_ID_DE_TU_KV"
+
+# ─── Rate limiting exacto ────────────────────────────────────────
+# Un Durable Object por clave (ej. "placa:nds-00001"). Ver src/limitador.js.
+[[durable_objects.bindings]]
+name = "LIMITADOR"
+class_name = "Limitador"
+
+# Las migraciones le avisan a Cloudflare que existe una clase nueva.
+# "new_sqlite_classes" usa el backend SQLite, que está incluido en el plan gratuito.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Limitador"]
+
+# ─── Variables públicas (NO secretas) ────────────────────────────
+# Los secretos (ADMIN_TOKEN) NO van acá: se cargan con `wrangler secret put`.
+[vars]
+ENTORNO = "produccion"
+
+# Hosts permitidos como destino, separados por coma. Coincidencia EXACTA:
+# "google.com" no habilita "sites.google.com". Agregá los tuyos acá.
+DOMINIOS_PERMITIDOS = "google.com,www.google.com,g.page,maps.app.goo.gl,search.google.com"
+
+# Cloudflare Access (ver README, sección "Proteger /admin con Access").
+# Ejemplo: ACCESS_TEAM_DOMAIN = "nodosstudio.cloudflareaccess.com"
+ACCESS_TEAM_DOMAIN = ""
+ACCESS_AUD = ""
+
+# ─── Dominio propio ──────────────────────────────────────────────
+# Descomentá cuando tu dominio esté en Cloudflare (ver README).
+# routes = [
+#   { pattern = "TU-DOMINIO", custom_domain = true }
+# ]

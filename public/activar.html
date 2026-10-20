@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Esta página la sirve el Worker en /r/<id> cuando la placa está sin activar. -->
+  <title>Activá tu placa — Nodos Studio</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#14213D">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <script src="/js/placa.js" defer></script>
+</head>
+<body class="pagina-simple" data-pagina="activar">
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="/">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Nodos Studio</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="contenedor">
+      <h1>Activá tu placa</h1>
+      <p class="bajada">Placa <strong data-id-placa>—</strong>. Ingresá el código de 6 caracteres de tu tarjeta de activación y el link de reseñas de tu negocio en Google.</p>
+
+      <noscript>
+        <p class="estado-mensaje es-error">Para activar la placa necesitás tener JavaScript habilitado en el navegador.</p>
+      </noscript>
+
+      <details>
+        <summary>¿Dónde consigo el link de reseñas de Google?</summary>
+        <ol>
+          <li>Entrá a tu Perfil de Empresa de Google (buscá tu negocio en Google con tu cuenta, o entrá a business.google.com).</li>
+          <li>Tocá <strong>«Pedir reseñas»</strong>.</li>
+          <li>Copiá el link (empieza con <code>https://g.page/r/</code>) y pegalo abajo.</li>
+        </ol>
+      </details>
+
+      <form class="formulario" data-formulario-placa novalidate>
+        <div class="campo">
+          <label for="codigo">Código de activación</label>
+          <!-- autocomplete="one-time-code" evita que el navegador sugiera
+               datos guardados; autocapitalize ayuda a tipear en mayúsculas. -->
+          <input class="campo-codigo" id="codigo" name="codigo" type="text"
+                 inputmode="text" autocomplete="one-time-code" autocapitalize="characters"
+                 spellcheck="false" maxlength="7" required aria-describedby="ayuda-codigo">
+          <p class="ayuda" id="ayuda-codigo">Está en tu tarjeta. No distingue mayúsculas de minúsculas.</p>
+        </div>
+        <div class="campo">
+          <label for="destino">Link de reseñas de Google</label>
+          <input id="destino" name="destino" type="url" inputmode="url" autocomplete="url"
+                 placeholder="https://g.page/r/..." maxlength="500" required aria-describedby="ayuda-destino">
+          <p class="ayuda" id="ayuda-destino">Aceptamos links de Google (g.page, maps.app.goo.gl, search.google.com o google.com/maps).</p>
+        </div>
+        <!-- role="status" + aria-live: el lector de pantalla anuncia el mensaje
+             cuando cambia, sin mover el foco. -->
+        <p class="estado-mensaje" data-estado role="status" aria-live="polite"></p>
+        <button class="boton boton-primario" type="submit">Activar placa</button>
+      </form>
+
+      <section class="exito" data-exito hidden aria-labelledby="titulo-exito">
+        <h2 id="titulo-exito" tabindex="-1">¡Listo! Tu placa está activa</h2>
+        <p>Desde ahora, quien toque o escanee la placa va a ir directo a tu página de reseñas. Puede tardar hasta un minuto en verse en todos lados.</p>
+        <p><strong>Guardá tu tarjeta:</strong> con el mismo código podés cambiar el destino cuando quieras.</p>
+        <div class="acciones">
+          <a class="boton boton-primario" data-enlace-probar href="/">Probar mi placa</a>
+          <a class="boton boton-secundario" data-enlace-editar href="/">Cambiar el destino</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

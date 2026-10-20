@@ -1,0 +1,150 @@
+/* ─────────────────────────────────────────────────────────────────
+   admin.css — Solo lo que el panel agrega a estilos.css.
+   ───────────────────────────────────────────────────────────────── */
+
+.admin main {
+  padding-block: 1.5rem 4rem;
+}
+
+.admin .encabezado .marca {
+  font-size: 1.05rem;
+}
+
+.bloque {
+  margin-bottom: 2.5rem;
+}
+
+.bloque h1,
+.bloque h2 {
+  font-size: 1.5rem;
+}
+
+.admin .formulario {
+  border: 1px solid var(--gris-borde);
+}
+
+.boton-chico {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.admin .estado-mensaje {
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Filtros ───────────────────────────────────────────────────── */
+.filtros {
+  display: grid;
+  gap: 0.75rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+/* ─── Tabla ─────────────────────────────────────────────────────── */
+.tabla-contenedor {
+  overflow-x: auto;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+}
+
+table {
+  width: 100%;
+  min-width: 60rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid var(--gris-borde);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--gris-fondo);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.celda-slug {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.celda-destino {
+  min-width: 16rem;
+  max-width: 24rem;
+  overflow-wrap: anywhere;
+}
+
+.celda-acciones {
+  white-space: nowrap;
+}
+
+.celda-acciones .boton + .boton {
+  margin-left: 0.4rem;
+}
+
+/* Insignias de estado: color + texto (el color nunca es la única pista). */
+.insignia {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  color: var(--azul-noche);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.insignia-activa {
+  background: var(--turquesa);
+}
+
+.insignia-sin_activar {
+  background: var(--ambar);
+}
+
+.insignia-desactivada {
+  background: var(--gris-borde);
+}
+
+/* ─── Diálogo ───────────────────────────────────────────────────── */
+.dialogo {
+  width: min(100% - 2rem, 32rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio);
+  box-shadow: 0 1rem 3rem rgb(20 33 61 / 0.3);
+}
+
+.dialogo::backdrop {
+  background: rgb(20 33 61 / 0.6);
+}
+
+.dialogo h2 {
+  font-size: 1.3rem;
+}
+
+@media (min-width: 40rem) {
+  .formulario-crear {
+    grid-template-columns: repeat(3, 1fr) auto;
+    align-items: start;
+  }
+
+  .formulario-crear .boton {
+    margin-top: 1.95rem;
+  }
+
+  .filtros {
+    grid-template-columns: 2fr 1fr auto;
+  }
+}

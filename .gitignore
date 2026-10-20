@@ -1,0 +1,22 @@
+# ─── Dependencias ────────────────────────────────────────────────
+node_modules/
+
+# ─── Estado local de wrangler (KV y Durable Objects simulados) ──
+.wrangler/
+
+# ─── Secretos: NUNCA al repo ─────────────────────────────────────
+# .dev.vars tiene el ADMIN_TOKEN de desarrollo. Se sube solo la plantilla.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+
+# ─── Salida del script de lote ───────────────────────────────────
+# Los CSV tienen los códigos de activación en texto plano.
+salida/
+
+# ─── Ruido del sistema operativo y logs ─────────────────────────
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+# robots.txt NO es seguridad: es un pedido de cortesía a los buscadores.
+# Por eso /admin no figura acá (sería anunciar dónde está); el panel usa
+# <meta name="robots" content="noindex"> y está protegido por Access.
+User-agent: *
+Disallow: /r/
+Disallow: /e/
+Disallow: /api/

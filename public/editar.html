@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Esta página la sirve el Worker en /e/<id> si la placa está activa. -->
+  <title>Cambiar el destino de tu placa — Nodos Studio</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#14213D">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <script src="/js/placa.js" defer></script>
+</head>
+<body class="pagina-simple" data-pagina="editar">
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="/">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Nodos Studio</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="contenedor">
+      <h1>Cambiar el destino</h1>
+      <p class="bajada">Placa <strong data-id-placa>—</strong>. Ingresá el código de tu tarjeta y el nuevo link al que querés que lleve la placa.</p>
+
+      <noscript>
+        <p class="estado-mensaje es-error">Para cambiar el destino necesitás tener JavaScript habilitado en el navegador.</p>
+      </noscript>
+
+      <form class="formulario" data-formulario-placa novalidate>
+        <div class="campo">
+          <label for="codigo">Código de tu tarjeta</label>
+          <input class="campo-codigo" id="codigo" name="codigo" type="text"
+                 inputmode="text" autocomplete="one-time-code" autocapitalize="characters"
+                 spellcheck="false" maxlength="7" required>
+        </div>
+        <div class="campo">
+          <label for="destino">Nuevo link de Google</label>
+          <input id="destino" name="destino" type="url" inputmode="url" autocomplete="url"
+                 placeholder="https://g.page/r/..." maxlength="500" required aria-describedby="ayuda-destino">
+          <p class="ayuda" id="ayuda-destino">Aceptamos links de Google (g.page, maps.app.goo.gl, search.google.com o google.com/maps).</p>
+        </div>
+        <p class="estado-mensaje" data-estado role="status" aria-live="polite"></p>
+        <button class="boton boton-primario" type="submit">Guardar nuevo destino</button>
+      </form>
+
+      <section class="exito" data-exito hidden aria-labelledby="titulo-exito">
+        <h2 id="titulo-exito" tabindex="-1">Destino actualizado</h2>
+        <p>La placa ya lleva al nuevo link. Puede tardar hasta un minuto en verse en todos lados.</p>
+        <div class="acciones">
+          <a class="boton boton-primario" data-enlace-probar href="/">Probar mi placa</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

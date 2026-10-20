@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    Panel de administración. Este HTML NO es secreto: no tiene datos.
+    Los datos los trae admin.js desde /api/admin/*, y esa API exige
+    Cloudflare Access + el token. Proteger la API es lo que importa.
+  -->
+  <title>Panel — Nodos Studio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+  <!-- type="module": modo estricto automático y se ejecuta después del HTML. -->
+  <script type="module" src="/admin/admin.js"></script>
+</head>
+<body class="admin">
+  <header class="encabezado">
+    <div class="contenedor">
+      <span class="marca">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Panel de Nodos Studio</span>
+      </span>
+      <button class="boton boton-secundario boton-chico" type="button" data-cerrar-sesion hidden>Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main id="contenido" class="contenedor">
+    <!-- Mensajes generales. aria-live los anuncia al lector de pantalla. -->
+    <p class="estado-mensaje" data-mensaje role="status" aria-live="polite"></p>
+
+    <!-- ─── Ingreso del token ─────────────────────────────────── -->
+    <section class="bloque" data-seccion-acceso aria-labelledby="titulo-acceso">
+      <h1 id="titulo-acceso">Ingresar</h1>
+      <p>Pegá el token de administración (el valor de <code>ADMIN_TOKEN</code>). Se guarda solo en esta pestaña y se borra al cerrarla.</p>
+      <form class="formulario" data-formulario-token>
+        <div class="campo">
+          <label for="token">Token</label>
+          <input id="token" name="token" type="password" autocomplete="off" required minlength="32">
+        </div>
+        <button class="boton boton-primario" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <div data-seccion-panel hidden>
+      <!-- ─── Crear enlace ──────────────────────────────────────── -->
+      <section class="bloque" aria-labelledby="titulo-crear">
+        <h1 id="titulo-crear">Nuevo enlace</h1>
+        <p>Para slugs con nombre propio (ej. <code>panaderia-lopez</code>). Las placas <code>nds-</code> se crean con <code>npm run generar</code>.</p>
+        <form class="formulario formulario-crear" data-formulario-crear novalidate>
+          <div class="campo">
+            <label for="nuevo-slug">Slug</label>
+            <input id="nuevo-slug" name="slug" type="text" required maxlength="40"
+                   pattern="[a-z0-9\-]{1,40}" autocapitalize="none" spellcheck="false" aria-describedby="ayuda-slug">
+            <p class="ayuda" id="ayuda-slug">Minúsculas, números y guiones. Queda en <code>/r/&lt;slug&gt;</code> y no se puede cambiar.</p>
+          </div>
+          <div class="campo">
+            <label for="nuevo-destino">Destino</label>
+            <input id="nuevo-destino" name="destino" type="url" required maxlength="500" placeholder="https://g.page/r/...">
+          </div>
+          <div class="campo">
+            <label for="nuevo-cliente">Cliente</label>
+            <input id="nuevo-cliente" name="cliente" type="text" maxlength="80">
+          </div>
+          <button class="boton boton-primario" type="submit">Crear enlace</button>
+        </form>
+      </section>
+
+      <!-- ─── Listado ───────────────────────────────────────────── -->
+      <section class="bloque" aria-labelledby="titulo-lista">
+        <h2 id="titulo-lista">Enlaces</h2>
+        <p data-resumen></p>
+        <div class="filtros">
+          <div class="campo">
+            <label for="buscar">Buscar</label>
+            <input id="buscar" type="search" data-filtro-texto placeholder="Slug, cliente o destino">
+          </div>
+          <div class="campo">
+            <label for="filtro-estado">Estado</label>
+            <select id="filtro-estado" data-filtro-estado>
+              <option value="">Todos</option>
+              <option value="activa">Activa</option>
+              <option value="sin_activar">Sin activar</option>
+              <option value="desactivada">Desactivada</option>
+            </select>
+          </div>
+          <button class="boton boton-secundario boton-chico" type="button" data-recargar>Recargar</button>
+        </div>
+
+        <!-- tabindex="0": permite desplazar la tabla con el teclado en celular. -->
+        <div class="tabla-contenedor" tabindex="0" role="region" aria-labelledby="titulo-lista">
+          <table>
+            <caption class="visualmente-oculto">Enlaces y placas registrados</caption>
+            <thead>
+              <tr>
+                <th scope="col">Slug</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody data-cuerpo-tabla></tbody>
+          </table>
+        </div>
+        <p data-vacio hidden>No hay enlaces que coincidan.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ─── Diálogo de edición ────────────────────────────────────
+       <dialog> nativo: maneja el foco, la tecla Esc y el fondo inerte
+       sin una línea de JavaScript extra. -->
+  <dialog class="dialogo" data-dialogo-editar aria-labelledby="titulo-editar">
+    <form class="formulario" data-formulario-editar method="dialog" novalidate>
+      <h2 id="titulo-editar">Editar <code data-editar-slug></code></h2>
+      <div class="campo">
+        <label for="editar-destino">Destino</label>
+        <input id="editar-destino" name="destino" type="url" maxlength="500">
+      </div>
+      <div class="campo">
+        <label for="editar-cliente">Cliente</label>
+        <input id="editar-cliente" name="cliente" type="text" maxlength="80">
+      </div>
+      <div class="campo">
+        <label for="editar-estado">Estado</label>
+        <select id="editar-estado" name="estado">
+          <option value="">Sin cambios</option>
+          <option value="activa">Activa</option>
+          <option value="desactivada">Desactivada</option>
+        </select>
+      </div>
+      <p class="estado-mensaje es-error" data-error-editar role="alert"></p>
+      <div class="acciones">
+        <button class="boton boton-primario" type="submit" value="guardar">Guardar</button>
+        <button class="boton boton-secundario" type="button" data-cancelar-edicion>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nodos Studio — Placas NFC y QR para reseñas en Google</title>
+  <meta name="description" content="Placas con chip NFC y código QR para que tus clientes dejen reseñas en Google en segundos. Con enlace editable: cambiás el destino sin reimprimir.">
+  <meta name="theme-color" content="#14213D">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="Nodos Studio — Más reseñas en Google, con un toque">
+  <meta property="og:description" content="Placas NFC + QR para reseñas de Google, con enlace editable.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <!-- "defer": el script se descarga en paralelo y se ejecuta cuando el HTML
+       ya está armado. Nada de <script> inline: la CSP no lo permitiría. -->
+  <script src="/js/landing.js" defer></script>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="encabezado">
+    <div class="contenedor">
+      <!-- alt="" porque el nombre ya está escrito al lado: si el logo también
+           tuviera alt, el lector de pantalla diría "Nodos Studio" dos veces. -->
+      <a class="marca" href="/">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Nodos Studio</span>
+      </a>
+      <nav class="navegacion" aria-label="Principal">
+        <ul>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- ─── Hero ─────────────────────────────────────────────── -->
+    <section class="hero seccion-oscura" aria-labelledby="titulo-hero">
+      <div class="contenedor">
+        <div>
+          <span class="etiqueta">Placas NFC + QR</span>
+          <h1 id="titulo-hero">Más reseñas en Google, <span class="resaltado">con un toque.</span></h1>
+          <p class="bajada">Tus clientes acercan el celular a la placa (o escanean el QR) y se abre directo la ventana para dejar su reseña. Sin apps y sin buscar tu negocio.</p>
+          <div class="acciones">
+            <a class="boton boton-primario" href="https://wa.me/5490000000000?text=Hola%20Nodos%20Studio!%20Quiero%20consultar%20por%20las%20placas%20NFC%2FQR%20para%20rese%C3%B1as%20de%20Google." target="_blank" rel="noopener noreferrer">Pedí tu placa por WhatsApp</a>
+            <a class="boton boton-secundario" href="#como-funciona">Cómo funciona</a>
+          </div>
+        </div>
+        <img class="hero-ilustracion" src="/img/placa.svg" width="360" height="320"
+             alt="Placa de Nodos Studio con estrellas, chip NFC y código QR, y un celular que se acerca para leerla.">
+      </div>
+    </section>
+
+    <!-- ─── Cómo funciona ────────────────────────────────────── -->
+    <section id="como-funciona" class="seccion" aria-labelledby="titulo-como">
+      <div class="contenedor">
+        <h2 id="titulo-como" class="titulo-seccion">Cómo funciona</h2>
+        <p class="bajada">Tres pasos. Tu cliente no necesita instalar nada.</p>
+        <ol class="pasos">
+          <li class="paso">
+            <h3>Recibís tu placa</h3>
+            <p>Con chip NFC y código QR, lista para el mostrador, la caja o las mesas. La activás vos con el código de tu tarjeta.</p>
+          </li>
+          <li class="paso">
+            <h3>Tu cliente la toca o la escanea</h3>
+            <p>Acerca el celular a la placa (NFC) o apunta la cámara al QR. Funciona con cualquier teléfono.</p>
+          </li>
+          <li class="paso">
+            <h3>Deja su reseña en Google</h3>
+            <p>Se abre directo la ventana para calificar tu negocio. Menos pasos, más reseñas.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ─── Beneficios ───────────────────────────────────────── -->
+    <section id="beneficios" class="seccion seccion-alterna" aria-labelledby="titulo-beneficios">
+      <div class="contenedor">
+        <h2 id="titulo-beneficios" class="titulo-seccion">Beneficios</h2>
+        <p class="bajada">Pedir una reseña "de palabra" casi nunca funciona. Una placa a la vista, sí.</p>
+        <div class="grilla">
+          <!-- Los íconos son decorativos (aria-hidden): el título ya dice todo. -->
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9z"/></svg>
+            <h3>Más reseñas, menos fricción</h3>
+            <p>Del "después te dejo una reseña" a dejarla en el momento, en dos toques.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+            <h3>Funciona con cualquier celular</h3>
+            <p>NFC para los teléfonos que lo tienen y QR para todos los demás.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v4h-4M5.5 22v-4h4"/></svg>
+            <h3>Enlace editable</h3>
+            <p>Si cambia tu ficha de Google, cambiamos el destino. La placa sigue funcionando sin reimprimir.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+            <h3>Sin apps</h3>
+            <p>Ni vos ni tus clientes tienen que instalar nada.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <h3>Más visibilidad local</h3>
+            <p>Las reseñas son parte de lo que Google tiene en cuenta para mostrar negocios en las búsquedas de la zona.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></svg>
+            <h3>Activación en un minuto</h3>
+            <p>Escaneás tu placa, ingresás el código de tu tarjeta y el link de tu negocio. Listo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Enlace editable ──────────────────────────────────── -->
+    <section id="enlace-editable" class="seccion" aria-labelledby="titulo-editable">
+      <div class="contenedor editable">
+        <div>
+          <h2 id="titulo-editable" class="titulo-seccion">El servicio de enlace editable</h2>
+          <p class="bajada">Tu placa no apunta directo a Google: apunta a un enlace de Nodos Studio que redirige a donde vos quieras. Por eso el destino se puede cambiar en cualquier momento.</p>
+          <ul class="lista-check">
+            <li>Cambiaste de ficha, de sucursal o de nombre: actualizamos el destino.</li>
+            <li>La placa impresa sigue siendo la misma.</li>
+            <li>Podés cambiar el destino vos mismo con el código de tu tarjeta.</li>
+          </ul>
+        </div>
+        <ol class="recorrido" aria-label="Recorrido de un escaneo">
+          <li class="recorrido-paso">Tu cliente toca la placa</li>
+          <li class="recorrido-flecha" aria-hidden="true">↓</li>
+          <li class="recorrido-paso recorrido-paso-clave">Enlace de Nodos Studio <code>/r/tu-negocio</code></li>
+          <li class="recorrido-flecha" aria-hidden="true">↓</li>
+          <li class="recorrido-paso">Tu página de reseñas en Google</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ─── Precios ──────────────────────────────────────────── -->
+    <section id="precios" class="seccion seccion-alterna" aria-labelledby="titulo-precios">
+      <div class="contenedor">
+        <h2 id="titulo-precios" class="titulo-seccion">Precios</h2>
+        <p class="bajada">Elegí el pack que mejor se adapte a tu negocio.</p>
+        <div class="planes">
+          <article class="plan">
+            <h3>Placa individual</h3>
+            <p class="precio">$ 00.000 <small>ARS</small></p>
+            <ul>
+              <li>1 placa NFC + QR</li>
+              <li>Enlace editable incluido</li>
+              <li>Tarjeta de activación</li>
+            </ul>
+            <a class="boton boton-secundario" href="https://wa.me/5490000000000?text=Hola%20Nodos%20Studio!%20Me%20interesa%20el%20plan%20Placa%20individual." target="_blank" rel="noopener noreferrer">Consultar <span class="visualmente-oculto">por la placa individual</span></a>
+          </article>
+          <article class="plan plan-destacado">
+            <span class="plan-insignia">Más elegido</span>
+            <h3>Pack x3</h3>
+            <p class="precio">$ 00.000 <small>ARS</small></p>
+            <ul>
+              <li>3 placas NFC + QR</li>
+              <li>Enlace editable para cada una</li>
+              <li>Ideal para caja, mesas y vidriera</li>
+            </ul>
+            <a class="boton boton-primario" href="https://wa.me/5490000000000?text=Hola%20Nodos%20Studio!%20Me%20interesa%20el%20plan%20Pack%20x3." target="_blank" rel="noopener noreferrer">Consultar <span class="visualmente-oculto">por el pack de 3 placas</span></a>
+          </article>
+          <article class="plan">
+            <h3>Pack Negocio x10</h3>
+            <p class="precio">$ 00.000 <small>ARS</small></p>
+            <ul>
+              <li>10 placas NFC + QR</li>
+              <li>Enlaces editables</li>
+              <li>Para locales grandes o varias sucursales</li>
+            </ul>
+            <a class="boton boton-secundario" href="https://wa.me/5490000000000?text=Hola%20Nodos%20Studio!%20Me%20interesa%20el%20plan%20Pack%20Negocio%20x10." target="_blank" rel="noopener noreferrer">Consultar <span class="visualmente-oculto">por el pack de 10 placas</span></a>
+          </article>
+        </div>
+        <p class="nota">Precios de referencia: reemplazar antes de publicar.</p>
+      </div>
+    </section>
+
+    <!-- ─── Contacto ─────────────────────────────────────────── -->
+    <section id="contacto" class="seccion seccion-oscura" aria-labelledby="titulo-contacto">
+      <div class="contenedor contacto">
+        <div>
+          <h2 id="titulo-contacto" class="titulo-seccion">¿Hablamos?</h2>
+          <p class="bajada">Escribinos por WhatsApp y te contamos tiempos de entrega, diseños y formas de pago.</p>
+          <div class="acciones">
+            <a class="boton boton-primario" href="https://wa.me/5490000000000?text=Hola%20Nodos%20Studio!%20Quiero%20consultar%20por%20las%20placas%20NFC%2FQR%20para%20rese%C3%B1as%20de%20Google." target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp</a>
+          </div>
+        </div>
+
+        <!-- Mejora progresiva: el formulario empieza oculto y landing.js lo
+             muestra. Sin JavaScript, el botón de arriba sigue funcionando. -->
+        <form class="formulario" data-formulario-whatsapp data-numero="5490000000000" hidden novalidate>
+          <h3>Armá tu consulta</h3>
+          <div class="campo">
+            <label for="nombre">Tu nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="60" required>
+          </div>
+          <div class="campo">
+            <label for="negocio">Nombre del negocio</label>
+            <input id="negocio" name="negocio" type="text" autocomplete="organization" maxlength="80" required>
+          </div>
+          <div class="campo">
+            <label for="cantidad">¿Cuántas placas necesitás?</label>
+            <select id="cantidad" name="cantidad">
+              <option value="1">1</option>
+              <option value="3" selected>3</option>
+              <option value="10">10</option>
+              <option value="más de 10">Más de 10</option>
+            </select>
+          </div>
+          <p class="estado-mensaje es-error" data-error-whatsapp role="alert"></p>
+          <button class="boton boton-primario" type="submit">Enviar por WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie seccion-oscura">
+    <div class="contenedor">
+      <div>
+        <a class="marca" href="/">
+          <img src="/img/logo.svg" alt="" width="36" height="36">
+          <span>Nodos Studio</span>
+        </a>
+        <p>Placas NFC y QR para reseñas de Google. © <span data-anio>2026</span> Nodos Studio.</p>
+      </div>
+      <nav aria-label="Pie de página">
+        <ul>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="https://wa.me/5490000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

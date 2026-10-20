@@ -1,0 +1,20 @@
+{
+  "name": "nodos-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing de Nodos Studio + redirector dinámico /r/<slug> para placas NFC/QR + panel de administración.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "logs": "wrangler tail",
+    "test": "node --test \"test/**/*.test.js\"",
+    "generar": "node scripts/generar-placas.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.1"
+  }
+}

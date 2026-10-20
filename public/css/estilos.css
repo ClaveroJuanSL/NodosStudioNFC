@@ -1,0 +1,699 @@
+/* ─────────────────────────────────────────────────────────────────
+   estilos.css — Estilos compartidos por todas las páginas.
+
+   Enfoque "mobile-first": las reglas base son para celular y los
+   @media (min-width: ...) AGREGAN cosas para pantallas más grandes.
+   Al revés (desktop primero y después "achicar") el celular termina
+   descargando y pisando reglas que no usa.
+   ───────────────────────────────────────────────────────────────── */
+
+/* ─── Tokens de diseño ────────────────────────────────────────────
+   Contrastes medidos según WCAG 2.2 (texto normal necesita 4.5:1):
+     azul-noche sobre blanco ........ 16.0:1  ✅ texto principal
+     azul-noche sobre ámbar .........  7.8:1  ✅ botón principal
+     azul-noche sobre turquesa ......  5.2:1  ✅ etiquetas y números
+     turquesa sobre blanco ..........  3.1:1  ❌ por eso los links usan
+     turquesa-texto sobre blanco ....  4.8:1  ✅ (tono derivado, más oscuro)
+     ámbar / coral sobre blanco .....  2.1 / 3.7  ❌ nunca como texto chico   */
+:root {
+  --azul-noche: #14213d;
+  --turquesa: #1fa2a6;
+  --turquesa-texto: #167e81;
+  --ambar: #f2a541;
+  --coral: #e4572e;
+  --blanco: #ffffff;
+  --gris-fondo: #f4f6f9;
+  --gris-texto: #4a5468; /* 7.6:1 sobre blanco */
+  --gris-borde: #d5dae3;
+
+  --color-foco: var(--azul-noche);
+  --radio: 1rem;
+  --sombra: 0 0.5rem 1.5rem rgb(20 33 61 / 0.08);
+  --ancho-maximo: 70rem;
+  /* Tipografía del sistema: cero descargas y cero dominios externos en la CSP. */
+  --fuente: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Scroll suave solo si la persona no pidió reducir animaciones. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--azul-noche);
+  background: var(--blanco);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 0.6em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--turquesa-texto);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--azul-noche);
+}
+
+/* Foco visible SIEMPRE que se navega con teclado. Nunca "outline: none"
+   sin reemplazo: quien usa teclado se quedaría sin saber dónde está. */
+:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 3px;
+  border-radius: 0.25rem;
+}
+
+/* Oculto a la vista pero leído por lectores de pantalla. */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* "Saltar al contenido": el primer Tab de la página lo muestra. */
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 10;
+  padding: 0.75rem 1rem;
+  background: var(--ambar);
+  color: var(--azul-noche);
+  font-weight: 700;
+  border-radius: 0.5rem;
+}
+
+.saltar:focus {
+  top: 1rem;
+}
+
+.contenedor {
+  width: min(100% - 2rem, var(--ancho-maximo));
+  margin-inline: auto;
+}
+
+/* ─── Botones ───────────────────────────────────────────────────── */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem; /* 48 px: área táctil cómoda en celular */
+  padding: 0.75rem 1.4rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.boton-primario {
+  background: var(--ambar);
+  color: var(--azul-noche);
+}
+
+.boton-primario:hover {
+  background: #f6bb6a;
+  color: var(--azul-noche);
+}
+
+.boton-secundario {
+  background: transparent;
+  color: inherit;
+  border-color: currentColor;
+}
+
+.boton-secundario:hover {
+  background: rgb(255 255 255 / 0.1);
+  color: inherit;
+}
+
+.boton[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* ─── Secciones ─────────────────────────────────────────────────── */
+.seccion {
+  padding-block: 4rem;
+}
+
+.seccion-alterna {
+  background: var(--gris-fondo);
+}
+
+/* Fondo oscuro: el foco pasa a ámbar (7.8:1 sobre azul noche). */
+.seccion-oscura {
+  --color-foco: var(--ambar);
+  background: var(--azul-noche);
+  color: var(--blanco);
+}
+
+.seccion-oscura a:not(.boton) {
+  color: var(--blanco);
+}
+
+.titulo-seccion {
+  font-size: clamp(1.6rem, 4vw + 1rem, 2.4rem);
+}
+
+/* Detalle decorativo en coral: no transmite información, solo adorna. */
+.titulo-seccion::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 0.3rem;
+  margin-top: 0.6rem;
+  border-radius: 1rem;
+  background: var(--coral);
+}
+
+.bajada {
+  max-width: 40rem;
+  color: var(--gris-texto);
+  font-size: 1.125rem;
+}
+
+.seccion-oscura .bajada {
+  color: #dfe5f0; /* 13:1 sobre azul noche */
+}
+
+/* ─── Encabezado ────────────────────────────────────────────────── */
+.encabezado {
+  border-bottom: 1px solid var(--gris-borde);
+  background: var(--blanco);
+}
+
+.encabezado .contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-block: 0.75rem;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--azul-noche);
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.marca img {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.navegacion ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navegacion a {
+  display: inline-block;
+  padding-block: 0.4rem;
+  color: var(--azul-noche);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navegacion a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Hero ──────────────────────────────────────────────────────── */
+.hero {
+  padding-block: 3rem 4rem;
+}
+
+.hero .contenedor {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 6vw + 1rem, 3.6rem);
+  letter-spacing: -0.02em;
+}
+
+.resaltado {
+  color: var(--ambar); /* 7.8:1 sobre azul noche */
+}
+
+.etiqueta {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: var(--turquesa);
+  color: var(--azul-noche);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.hero-ilustracion {
+  justify-self: center;
+  width: min(100%, 26rem);
+}
+
+/* ─── Cómo funciona ─────────────────────────────────────────────── */
+.pasos {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+
+.paso {
+  position: relative;
+  padding: 1.5rem;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  background: var(--blanco);
+  counter-increment: paso;
+}
+
+/* El número sale de un contador CSS: el HTML ya es una <ol>, así que el
+   lector de pantalla anuncia "1 de 3" por su cuenta. */
+.paso::before {
+  content: counter(paso);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--turquesa);
+  color: var(--azul-noche);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.paso h3 {
+  font-size: 1.25rem;
+}
+
+.paso p {
+  margin: 0;
+  color: var(--gris-texto);
+}
+
+/* ─── Beneficios ────────────────────────────────────────────────── */
+.grilla {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.tarjeta {
+  padding: 1.5rem;
+  border-radius: var(--radio);
+  background: var(--blanco);
+  box-shadow: var(--sombra);
+}
+
+.tarjeta h3 {
+  font-size: 1.15rem;
+}
+
+.tarjeta p {
+  margin: 0;
+  color: var(--gris-texto);
+}
+
+.icono {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--turquesa-texto);
+}
+
+/* ─── Enlace editable ───────────────────────────────────────────── */
+.editable {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.recorrido {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recorrido-paso {
+  padding: 0.9rem 1.1rem;
+  border-radius: 0.75rem;
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  font-weight: 600;
+}
+
+.recorrido-paso-clave {
+  border: 2px solid var(--turquesa);
+}
+
+.recorrido code {
+  font-size: 0.95em;
+  word-break: break-all;
+}
+
+.recorrido-flecha {
+  justify-self: center;
+  color: var(--turquesa-texto);
+  font-weight: 800;
+}
+
+.lista-check {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-check li {
+  position: relative;
+  margin-bottom: 0.6rem;
+  padding-left: 1.9rem;
+}
+
+.lista-check li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--turquesa);
+}
+
+/* ─── Precios ───────────────────────────────────────────────────── */
+.planes {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  background: var(--blanco);
+}
+
+.plan-destacado {
+  border: 3px solid var(--turquesa);
+  box-shadow: var(--sombra);
+}
+
+.plan-insignia {
+  align-self: flex-start;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--ambar);
+  color: var(--azul-noche);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.plan h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.25rem;
+}
+
+.precio {
+  margin: 0.5rem 0 1rem;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.precio small {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gris-texto);
+}
+
+.plan ul {
+  flex: 1;
+  margin: 0 0 1.5rem;
+  padding-left: 1.2rem;
+  color: var(--gris-texto);
+}
+
+.nota {
+  margin-top: 1.5rem;
+  color: var(--gris-texto);
+  font-size: 0.95rem;
+}
+
+/* ─── Contacto ──────────────────────────────────────────────────── */
+.contacto {
+  display: grid;
+  gap: 2rem;
+}
+
+/* ─── Formularios ───────────────────────────────────────────────── */
+.formulario {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: var(--radio);
+  background: var(--blanco);
+  color: var(--azul-noche);
+  --color-foco: var(--azul-noche);
+}
+
+.campo {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.campo label {
+  font-weight: 700;
+}
+
+.campo .ayuda {
+  margin: 0;
+  color: var(--gris-texto);
+  font-size: 0.92rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 0.85rem;
+  border: 2px solid #8a94a8; /* 3.2:1: los bordes de controles necesitan 3:1 */
+  border-radius: 0.6rem;
+  background: var(--blanco);
+  color: var(--azul-noche);
+  font: inherit;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--azul-noche);
+}
+
+.campo-codigo {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 1.4rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Mensajes de estado (éxito / error). El color nunca es la única pista:
+   el texto también dice qué pasó. */
+.estado-mensaje {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-left: 0.35rem solid var(--turquesa);
+  border-radius: 0.5rem;
+  background: #e6f6f6;
+  color: var(--azul-noche);
+}
+
+.estado-mensaje:empty {
+  display: none;
+}
+
+.estado-mensaje.es-error {
+  border-left-color: var(--coral);
+  background: #fdece7;
+}
+
+/* ─── Páginas simples (activar, editar, 404) ────────────────────── */
+.pagina-simple main {
+  padding-block: 2.5rem 4rem;
+}
+
+.pagina-simple .contenedor {
+  max-width: 36rem;
+}
+
+.pagina-simple h1 {
+  font-size: clamp(1.8rem, 5vw + 1rem, 2.4rem);
+}
+
+details {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--gris-fondo);
+}
+
+summary {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+details ol {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.exito {
+  padding: 1.5rem;
+  border-radius: var(--radio);
+  border: 3px solid var(--turquesa);
+}
+
+.exito .acciones {
+  margin-top: 1rem;
+}
+
+/* ─── Pie ───────────────────────────────────────────────────────── */
+.pie {
+  padding-block: 2.5rem;
+  font-size: 0.95rem;
+}
+
+.pie .contenedor {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.pie ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie .marca {
+  color: var(--blanco);
+}
+
+.pie p {
+  margin: 0;
+  color: #dfe5f0;
+}
+
+/* ─── Pantallas medianas (tablet) ───────────────────────────────── */
+@media (min-width: 40rem) {
+  .grilla {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pasos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ─── Pantallas grandes (escritorio) ────────────────────────────── */
+@media (min-width: 64rem) {
+  .seccion {
+    padding-block: 6rem;
+  }
+
+  .hero {
+    padding-block: 5rem 6rem;
+  }
+
+  .hero .contenedor,
+  .editable,
+  .contacto {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+  }
+
+  .grilla,
+  .planes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pie .contenedor {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
