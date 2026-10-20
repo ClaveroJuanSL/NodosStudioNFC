@@ -178,7 +178,7 @@ Probalo con un QR y con NFC:
 - **QR:** generá un QR con esa URL (por ejemplo, desde Chrome en la PC: menú *Compartir → Crear código QR*) y escanealo con la cámara del celular.
 - **NFC:** con una etiqueta NTAG213/215 y la app **NFC Tools** (Android/iOS): *Escribir → Agregar un registro → URL* → pegá la URL → *Escribir* y acercá la etiqueta. Después tocá la etiqueta con el celular bloqueado/desbloqueado para ver el comportamiento real.
 
-> Desde el celular el panel admin responde 503: no es `localhost`, así que el Worker exige Cloudflare Access (que en local no existe). Es a propósito: la regla de "saltear Access" solo vale en `localhost`.
+> **Ojo con el admin al exponer tu PC.** `wrangler.toml` tiene `[dev] host = "localhost"`, así que en `wrangler dev` **todo** pedido le llega al Worker como si viniera de `localhost`, también desde el celular o desde un túnel. Si levantás el servidor con `--ip 0.0.0.0` o con `cloudflared`, el `/admin` local queda protegido **solo por el token** (en local no existe Cloudflare Access). Son datos de prueba, pero igual: no compartas esa URL y cerrala al terminar. En producción esto no aplica: `[dev]` solo afecta a `wrangler dev`.
 
 ### Con HTTPS desde cualquier red (opcional)
 
@@ -227,7 +227,9 @@ npx wrangler login
 npx wrangler kv namespace create ENLACES
 ```
 
-Copiá el `id` que devuelve y reemplazá `REEMPLAZAR_CON_EL_ID_DE_TU_KV` en `wrangler.toml`.
+Copiá el `id` que devuelve y reemplazá `REEMPLAZAR_CON_EL_ID_DE_TU_KV` en `wrangler.toml`. El id no es un secreto: sin las credenciales de tu cuenta no sirve de nada.
+
+> Al cambiar el id, `wrangler dev` empieza a usar otra base local vacía: el KV simulado se guarda en `.wrangler/state` en una carpeta **por id**. Tus datos de prueba anteriores siguen ahí, pero ya no se ven. Volvé a crearlos con `npm run generar -- 5` y desde `/admin`.
 
 ### 9.4 Proteger `/admin` con Cloudflare Access
 
@@ -248,13 +250,19 @@ El Worker no confía ciegamente en Access: **verifica la firma del JWT** que Acc
 
 ### 9.5 Enlazar el dominio
 
-En `wrangler.toml`, descomentá y completá:
+`wrangler.toml` ya tiene la ruta de `nodosnfc.com.ar`:
 
 ```toml
 routes = [
-  { pattern = "TU-DOMINIO", custom_domain = true }
+  { pattern = "nodosnfc.com.ar", custom_domain = true }
 ]
 ```
+
+Tres cosas que conviene saber:
+
+- **Va arriba de todo**, antes de cualquier `[sección]`. En TOML, si quedara debajo de `[vars]`, se leería como la variable `vars.routes` y el dominio no se conectaría, sin ningún error.
+- **`custom_domain = true`**: Cloudflare crea solo el registro DNS y el certificado HTTPS. Requiere que el dominio esté **Active** en tu cuenta (paso 9.1); si no, `wrangler deploy` falla.
+- **`[dev] host = "localhost"`**: con una ruta configurada, `wrangler dev` simula estar en `nodosnfc.com.ar` y el admin local respondería 503. Esa línea lo evita (ver sección 7).
 
 ### 9.6 Desplegar y cargar el secreto
 

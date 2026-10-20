@@ -22,6 +22,18 @@ compatibility_date = "2026-10-01"
 workers_dev = false
 preview_urls = false
 
+# ─── Dominio propio ──────────────────────────────────────────────
+# OJO: "routes" es una clave de primer nivel y tiene que estar ANTES de
+# cualquier [sección]. Si quedara debajo de [vars], TOML la leería como
+# la variable vars.routes y el dominio no se conectaría (sin dar error).
+#
+# custom_domain = true: Cloudflare crea solo el registro DNS y el
+# certificado HTTPS. Requiere que nodosnfc.com.ar esté ACTIVO en esta cuenta
+# de Cloudflare; mientras no lo esté, `wrangler deploy` va a fallar.
+routes = [
+  { pattern = "nodosnfc.com.ar", custom_domain = true }
+]
+
 # ─── Sitio estático ──────────────────────────────────────────────
 [assets]
 directory = "./public"
@@ -31,11 +43,12 @@ binding = "ASSETS"
 
 # ─── Base de datos clave-valor ───────────────────────────────────
 # Guarda "enlace:<slug>" → { estado, destino, cliente, codigo_hash, sal, ... }
-# El id lo obtenés con:  npx wrangler kv namespace create ENLACES
-# En local (wrangler dev) este valor puede quedar así: se simula en .wrangler/
+# El id salió de:  npx wrangler kv namespace create ENLACES
+# No es un secreto: sin las credenciales de tu cuenta no sirve para nada.
+# En local (wrangler dev) igual se usa una copia simulada en .wrangler/state.
 [[kv_namespaces]]
 binding = "ENLACES"
-id = "REEMPLAZAR_CON_EL_ID_DE_TU_KV"
+id = "3e09df0e1e4e4a43a7f211b629f4a4d0"
 
 # ─── Rate limiting exacto ────────────────────────────────────────
 # Un Durable Object por clave (ej. "placa:nds-00001"). Ver src/limitador.js.
@@ -60,11 +73,14 @@ DOMINIOS_PERMITIDOS = "google.com,www.google.com,g.page,maps.app.goo.gl,search.g
 
 # Cloudflare Access (ver README, sección "Proteger /admin con Access").
 # Ejemplo: ACCESS_TEAM_DOMAIN = "nodosstudio.cloudflareaccess.com"
-ACCESS_TEAM_DOMAIN = ""
-ACCESS_AUD = ""
+ACCESS_TEAM_DOMAIN = "nodosstudio.cloudflareaccess.com"
+ACCESS_AUD = "7622034a508818c17e67a11938ef8e62ec701faa125a04169ac7e67803eb0a04"
 
-# ─── Dominio propio ──────────────────────────────────────────────
-# Descomentá cuando tu dominio esté en Cloudflare (ver README).
-# routes = [
-#   { pattern = "TU-DOMINIO", custom_domain = true }
-# ]
+# ─── Solo para `wrangler dev` (no afecta el deploy) ──────────────
+# Con `routes` configurado, wrangler dev SIMULA estar en nodosnfc.com.ar:
+# el Worker recibiría request.url = "http://nodosnfc.com.ar/..." aunque
+# entres por localhost. Entonces esDesarrolloLocal() (src/lib/seguridad.js)
+# ve un dominio real, exige Cloudflare Access y el admin local responde 503.
+# Fijando host = "localhost", en local el Worker ve "http://localhost/...".
+[dev]
+host = "localhost"
