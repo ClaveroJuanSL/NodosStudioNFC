@@ -10,6 +10,7 @@
 
 import { ErrorHttp, conHeadersDeSeguridad, errorJson, paginaNoEncontrada } from "./lib/respuestas.js";
 import * as admin from "./rutas/admin.js";
+import { manejarMenu } from "./rutas/menu.js";
 import { manejarActivacion, manejarCambioDeDestino, manejarPaginaEdicion } from "./rutas/placas.js";
 import { manejarRedireccion } from "./rutas/redirector.js";
 
@@ -23,6 +24,7 @@ export { Limitador } from "./limitador.js";
  */
 const RUTAS = [
   { patron: /^\/r\/([^/]+)$/, metodos: { GET: manejarRedireccion, HEAD: manejarRedireccion } },
+  { patron: /^\/m\/([^/]+)$/, metodos: { GET: manejarMenu, HEAD: manejarMenu } },
   { patron: /^\/e\/([^/]+)$/, metodos: { GET: manejarPaginaEdicion, HEAD: manejarPaginaEdicion } },
   { patron: /^\/api\/placas\/([^/]+)\/activar$/, metodos: { POST: manejarActivacion } },
   { patron: /^\/api\/placas\/([^/]+)\/destino$/, metodos: { PUT: manejarCambioDeDestino } },

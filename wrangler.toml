@@ -71,6 +71,13 @@ ENTORNO = "produccion"
 # "google.com" no habilita "sites.google.com". Agregá los tuyos acá.
 DOMINIOS_PERMITIDOS = "google.com,www.google.com,g.page,maps.app.goo.gl,search.google.com"
 
+# Menús digitales (/m/<slug>): proyecto de Supabase. Ninguno es secreto:
+# la publishable key es pública por diseño (la protege RLS). NUNCA pongas
+# acá la "secret key" ni la "service_role": esas se saltean RLS.
+# Vacío = /m/* responde 503 "servicio no disponible".
+SUPABASE_URL = ""
+SUPABASE_PUBLISHABLE_KEY = ""
+
 # Cloudflare Access (ver README, sección "Proteger /admin con Access").
 # Ejemplo: ACCESS_TEAM_DOMAIN = "nodosstudio.cloudflareaccess.com"
 ACCESS_TEAM_DOMAIN = "nodosstudio.cloudflareaccess.com"

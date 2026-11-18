@@ -1,0 +1,256 @@
+/* ─────────────────────────────────────────────────────────────────
+   menu.css — Estilos del menú digital (/m/<slug>).
+   Mobile-first. El color de marca llega por las variables --color y
+   --sobre-color, definidas en un <style> inline que arma el Worker
+   (el texto sobre el color se elige solo, para que siempre se lea).
+   Sin fuentes externas, sin JavaScript.
+   ───────────────────────────────────────────────────────────────── */
+:root {
+  --color: #14213d;
+  --sobre-color: #ffffff;
+  --fondo: #faf9f7;
+  --tarjeta: #ffffff;
+  --texto: #1d2433;
+  --suave: #5a6377; /* 6:1 sobre blanco */
+  --borde: #e3e5ea;
+  --fuente: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 4rem; /* que el título no quede tapado por la barra de categorías */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  /* Espacio abajo para que la barra fija no tape el último plato. */
+  padding-bottom: 6rem;
+  font-family: var(--fuente);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+a:focus-visible {
+  outline: 3px solid var(--texto);
+  outline-offset: 2px;
+}
+
+/* ─── Cabecera ──────────────────────────────────────────────────── */
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.25rem 1rem;
+  color: var(--sobre-color);
+  background: var(--color);
+}
+
+.cabecera h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.logo {
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* ─── Categorías (barra que se queda arriba al hacer scroll) ───── */
+.categorias {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  overflow-x: auto;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--borde);
+}
+
+.categorias a {
+  flex: none;
+  padding: 0.5rem 0.875rem;
+  color: var(--texto);
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+}
+
+.categorias a:hover {
+  border-color: var(--color);
+}
+
+/* ─── Platos ────────────────────────────────────────────────────── */
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+section {
+  padding-top: 1.5rem;
+}
+
+section h2 {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.375rem;
+  font-size: 1.25rem;
+  border-bottom: 3px solid var(--color);
+}
+
+.platos {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plato {
+  display: flex;
+  gap: 0.875rem;
+  justify-content: space-between;
+  padding: 0.875rem;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 0.875rem;
+}
+
+.plato-texto {
+  min-width: 0;
+}
+
+.plato h3 {
+  margin: 0;
+  font-size: 1.0625rem;
+  overflow-wrap: anywhere;
+}
+
+.plato p {
+  margin: 0.25rem 0 0;
+}
+
+.descripcion {
+  color: var(--suave);
+  font-size: 0.9375rem;
+}
+
+.precio {
+  font-weight: 700;
+}
+
+.plato img {
+  flex: none;
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: 0.625rem;
+  background: var(--borde);
+}
+
+.agotado h3,
+.agotado .descripcion,
+.agotado img {
+  opacity: 0.55;
+}
+
+.agotado .precio {
+  color: var(--suave);
+  font-weight: 400;
+}
+
+.etiqueta {
+  display: inline-block;
+  margin-left: 0.375rem;
+  padding: 0.0625rem 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--borde);
+  border-radius: 999px;
+}
+
+.vacio {
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--suave);
+}
+
+.creditos {
+  margin: 2rem 1rem 0;
+  font-size: 0.8125rem;
+  text-align: center;
+  color: var(--suave);
+}
+
+.creditos a {
+  color: inherit;
+}
+
+/* ─── Barra fija inferior: reseña + redes ──────────────────────── */
+.barra {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  background: var(--tarjeta);
+  border-top: 1px solid var(--borde);
+  box-shadow: 0 -0.25rem 1rem rgb(0 0 0 / 0.06);
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem; /* zona táctil cómoda */
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: var(--texto);
+  text-decoration: none;
+  background: var(--tarjeta);
+  border: 2px solid var(--color);
+  border-radius: 0.75rem;
+}
+
+.boton.principal {
+  flex: 1;
+  max-width: 16rem;
+  color: var(--sobre-color);
+  background: var(--color);
+}
+
+@media (min-width: 40rem) {
+  .cabecera {
+    justify-content: center;
+  }
+  .categorias {
+    justify-content: center;
+  }
+}
