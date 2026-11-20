@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    Panel de clientes (menú digital). Este HTML no tiene datos ni secretos:
+    los datos los trae panel.js desde Supabase y ahí RLS decide qué ve cada
+    usuario. Lo que importa es la política de la base, no esconder esta página.
+  -->
+  <title>Mi menú — Nodos Studio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <link rel="stylesheet" href="/panel/panel.css">
+  <!-- Copia de supabase-js (ver scripts/vendor.mjs). Define la variable global "supabase". -->
+  <script src="/vendor/supabase.js" defer></script>
+  <script type="module" src="/panel/panel.js"></script>
+</head>
+<body class="panel">
+  <header class="encabezado">
+    <div class="contenedor">
+      <span class="marca">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Mi menú</span>
+      </span>
+      <button class="boton boton-secundario boton-chico" type="button" data-cerrar-sesion hidden>Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p class="estado-mensaje" data-mensaje role="status" aria-live="polite"></p>
+
+    <!-- ─── Ingreso ─────────────────────────────────────────────── -->
+    <section class="bloque" data-seccion-login aria-labelledby="titulo-login" hidden>
+      <h1 id="titulo-login">Ingresar</h1>
+      <p>Entrá con el email y la contraseña que te dio Nodos Studio.</p>
+      <form class="formulario" data-formulario-login novalidate>
+        <div class="campo">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="username" required maxlength="254">
+        </div>
+        <div class="campo">
+          <label for="clave">Contraseña</label>
+          <input id="clave" name="clave" type="password" autocomplete="current-password" required maxlength="200">
+        </div>
+        <button class="boton boton-primario" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <!-- ─── Sin local vinculado ─────────────────────────────────── -->
+    <section class="bloque" data-seccion-sin-local aria-labelledby="titulo-sin-local" hidden>
+      <h1 id="titulo-sin-local">Todavía no tenés un local</h1>
+      <p>Tu usuario no está vinculado a ningún menú. Escribinos y lo resolvemos.</p>
+    </section>
+
+    <!-- ─── Panel ───────────────────────────────────────────────── -->
+    <div data-seccion-panel hidden>
+      <section class="bloque" aria-labelledby="titulo-local">
+        <h1 id="titulo-local" data-titulo-local></h1>
+        <div class="campo" data-selector-local hidden>
+          <label for="selector-local">Local</label>
+          <select id="selector-local" data-selector></select>
+        </div>
+        <p>
+          <a data-enlace-menu href="#" target="_blank" rel="noopener noreferrer">Ver mi menú público</a>
+        </p>
+        <p class="ayuda-cache">Los cambios pueden tardar hasta 2 minutos en verse en el menú público.</p>
+      </section>
+
+      <section class="bloque" aria-labelledby="titulo-categorias">
+        <div class="cabecera-seccion">
+          <h2 id="titulo-categorias">Categorías y platos</h2>
+          <button class="boton boton-primario boton-chico" type="button" data-nueva-categoria>Nueva categoría</button>
+        </div>
+        <div data-lista-categorias></div>
+        <p data-vacio hidden>Todavía no hay categorías. Creá la primera para empezar a cargar platos.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ─── Diálogo: categoría ──────────────────────────────────────
+       <dialog> nativo: maneja foco, Esc y fondo inerte sin JS extra. -->
+  <dialog class="dialogo" data-dialogo-categoria aria-labelledby="titulo-dlg-categoria">
+    <form class="formulario" data-formulario-categoria method="dialog" novalidate>
+      <h2 id="titulo-dlg-categoria" data-titulo-dlg-categoria>Categoría</h2>
+      <div class="campo">
+        <label for="categoria-nombre">Nombre</label>
+        <input id="categoria-nombre" name="nombre" type="text" required maxlength="60">
+      </div>
+      <div class="campo">
+        <label for="categoria-orden">Orden</label>
+        <input id="categoria-orden" name="orden" type="number" step="1" min="0" max="9999" inputmode="numeric" aria-describedby="ayuda-orden-cat">
+        <p class="ayuda" id="ayuda-orden-cat">Las categorías se muestran de menor a mayor.</p>
+      </div>
+      <p class="estado-mensaje es-error" data-error-categoria role="alert"></p>
+      <div class="acciones">
+        <button class="boton boton-primario" type="submit">Guardar</button>
+        <button class="boton boton-secundario" type="button" data-cancelar-dialogo>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ─── Diálogo: plato ──────────────────────────────────────── -->
+  <dialog class="dialogo" data-dialogo-producto aria-labelledby="titulo-dlg-producto">
+    <form class="formulario" data-formulario-producto method="dialog" novalidate>
+      <h2 id="titulo-dlg-producto" data-titulo-dlg-producto>Plato</h2>
+      <div class="campo">
+        <label for="producto-nombre">Nombre</label>
+        <input id="producto-nombre" name="nombre" type="text" required maxlength="120">
+      </div>
+      <div class="campo">
+        <label for="producto-descripcion">Descripción (opcional)</label>
+        <textarea id="producto-descripcion" name="descripcion" rows="3" maxlength="300"></textarea>
+      </div>
+      <div class="campo">
+        <label for="producto-foto">Foto (opcional)</label>
+        <img class="foto-previa" data-foto-previa alt="Vista previa de la foto del plato" width="160" height="160" hidden>
+        <input id="producto-foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp" data-entrada-foto aria-describedby="ayuda-foto">
+        <p class="ayuda" id="ayuda-foto">Se achica y comprime sola antes de subirse. Funciona mejor una foto bien iluminada y parecida a un cuadrado.</p>
+        <p class="ayuda" data-estado-foto role="status" aria-live="polite"></p>
+        <button class="boton boton-secundario boton-chico" type="button" data-quitar-foto hidden>Quitar foto</button>
+      </div>
+      <div class="campo">
+        <label for="producto-precio">Precio ($)</label>
+        <input id="producto-precio" name="precio" type="text" inputmode="decimal" required maxlength="12" autocomplete="off" aria-describedby="ayuda-precio">
+        <p class="ayuda" id="ayuda-precio">Ej.: 6500 o 14500,50</p>
+      </div>
+      <div class="campo">
+        <label for="producto-orden">Orden</label>
+        <input id="producto-orden" name="orden" type="number" step="1" min="0" max="9999" inputmode="numeric">
+      </div>
+      <div class="campo campo-casilla">
+        <input id="producto-disponible" name="disponible" type="checkbox">
+        <label for="producto-disponible">Disponible</label>
+      </div>
+      <p class="estado-mensaje es-error" data-error-producto role="alert"></p>
+      <div class="acciones">
+        <button class="boton boton-primario" type="submit">Guardar</button>
+        <button class="boton boton-secundario" type="button" data-cancelar-dialogo>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,221 @@
+/* ─────────────────────────────────────────────────────────────────
+   panel.css — Lo que el panel de clientes agrega a estilos.css.
+   ───────────────────────────────────────────────────────────────── */
+
+/* El atributo hidden lo usa panel.js para mostrar/ocultar secciones, pero
+   cualquier regla con "display" (ej. .boton) lo anula. Esto lo hace ganar. */
+.panel [hidden] {
+  display: none !important;
+}
+
+.panel main {
+  padding-block: 1.5rem 4rem;
+}
+
+.bloque {
+  margin-bottom: 2.5rem;
+}
+
+.bloque h1,
+.bloque h2 {
+  font-size: 1.5rem;
+}
+
+.panel .formulario {
+  border: 1px solid var(--gris-borde);
+}
+
+.panel .estado-mensaje {
+  margin-bottom: 1.5rem;
+}
+
+.boton-chico {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.ayuda-cache {
+  color: var(--gris-texto);
+  font-size: 0.95rem;
+}
+
+.cabecera-seccion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.cabecera-seccion h2 {
+  margin: 0;
+}
+
+/* ─── Categorías ────────────────────────────────────────────────── */
+.categoria {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+}
+
+.categoria-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--turquesa);
+}
+
+.categoria-cabecera h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  overflow-wrap: anywhere;
+}
+
+.grupo-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ─── Platos ────────────────────────────────────────────────────── */
+.lista-platos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plato-fila {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.plato-fila:last-child {
+  border-bottom: 0;
+}
+
+.plato-info {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.plato-miniatura {
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  background: var(--gris-borde);
+}
+
+.plato-agotado .plato-miniatura {
+  opacity: 0.55;
+}
+
+.foto-previa {
+  width: 10rem;
+  height: 10rem;
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  background: var(--gris-fondo);
+}
+
+.plato-nombre {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.plato-precio {
+  margin-left: 0.5rem;
+  font-weight: 400;
+  color: var(--gris-texto);
+}
+
+.plato-descripcion {
+  margin: 0.15rem 0 0;
+  color: var(--gris-texto);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.plato-agotado .plato-nombre {
+  color: var(--gris-texto);
+  text-decoration: line-through;
+}
+
+.sin-platos {
+  margin: 0.75rem 0;
+  color: var(--gris-texto);
+}
+
+.casilla-disponible {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 2.5rem;
+}
+
+.casilla-disponible input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.campo-casilla {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.campo-casilla input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.boton-peligro {
+  color: #8a1c0c;
+  background: var(--blanco);
+  border: 2px solid #8a1c0c;
+}
+
+.boton-peligro:hover {
+  background: #fdeeea;
+}
+
+/* ─── Diálogos ──────────────────────────────────────────────────── */
+.dialogo {
+  width: min(100% - 2rem, 32rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio);
+  box-shadow: 0 1rem 3rem rgb(20 33 61 / 0.3);
+}
+
+.dialogo::backdrop {
+  background: rgb(20 33 61 / 0.6);
+}
+
+.dialogo h2 {
+  font-size: 1.3rem;
+}
+
+@media (min-width: 40rem) {
+  .plato-fila {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+  }
+}

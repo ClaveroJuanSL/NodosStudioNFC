@@ -75,8 +75,8 @@ DOMINIOS_PERMITIDOS = "google.com,www.google.com,g.page,maps.app.goo.gl,search.g
 # la publishable key es pública por diseño (la protege RLS). NUNCA pongas
 # acá la "secret key" ni la "service_role": esas se saltean RLS.
 # Vacío = /m/* responde 503 "servicio no disponible".
-SUPABASE_URL = ""
-SUPABASE_PUBLISHABLE_KEY = ""
+SUPABASE_URL = "https://safhlmjqpzwyyazjjzqb.supabase.co"
+SUPABASE_PUBLISHABLE_KEY = "sb_publishable_GjiPEPJB_ghWe_xJku5rFw_9CQsRie0"
 
 # Cloudflare Access (ver README, sección "Proteger /admin con Access").
 # Ejemplo: ACCESS_TEAM_DOMAIN = "nodosstudio.cloudflareaccess.com"

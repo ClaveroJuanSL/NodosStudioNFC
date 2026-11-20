@@ -9,12 +9,16 @@
     "deploy": "wrangler deploy",
     "logs": "wrangler tail",
     "test": "node --test \"test/**/*.test.js\"",
-    "generar": "node scripts/generar-placas.mjs"
+    "generar": "node scripts/generar-placas.mjs",
+    "vendor": "node scripts/vendor.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
     "wrangler": "^4.151.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.1"
   }
 }

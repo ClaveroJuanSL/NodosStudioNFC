@@ -15,3 +15,15 @@
 /admin/*
   Cache-Control: no-store
   X-Robots-Tag: noindex, nofollow
+
+# Panel de clientes (/panel). Necesita que el navegador hable con Supabase,
+# así que NO puede usar la CSP global (connect-src 'self'). La línea "!" la
+# desacopla y la regla siguiente pone una propia: permite SOLO el host de
+# nuestro proyecto de Supabase. El orden importa: esta regla va DESPUÉS de /*.
+# Si cambia SUPABASE_URL, cambialo acá y en public/panel/config.js
+# (test/panel.test.js verifica que los tres lugares coincidan).
+/panel/*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://safhlmjqpzwyyazjjzqb.supabase.co blob:; connect-src 'self' https://safhlmjqpzwyyazjjzqb.supabase.co; form-action 'none'; frame-ancestors 'none'; base-uri 'none'
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
